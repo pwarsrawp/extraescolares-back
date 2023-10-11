@@ -5,12 +5,7 @@ const { getAllUsers, getOneUser, createUser, updateUser, deleteUser } = require(
 
 router.get('/', getAllUsers)
 router.get('/:userId', getOneUser)
-router.post('/', async (req, res) => {
-  const newUser = await User.create(req.body)
-  res.status(201).json(newUser)
-})
 
-/* UPDATE USER */
 router.put('/:userId', async (req, res) => {
   /* PASSWORD CHECK */
   const payload = req.body
@@ -36,11 +31,7 @@ router.put('/:userId', async (req, res) => {
   res.json(updatedUser)
 })
 
-/* DELETE USER */
-router.delete('/:userId', async (req, res) => {
-  await User.findByIdAndDelete(req.params.userId)
-  res.status(202).json({ message: 'User successfully deleted' })
-})
+router.delete('/:userId', deleteUser)
 
 // PURCHASES BY SPECIFIC USER
 router.get('/:userId/purchases', async (req, res) => {

@@ -21,7 +21,7 @@ router.post('/signup', async (req, res) => {
     res.status(201).json({ message: 'User added successfully' })
   } catch (err) {
     console.log(err)
-    res.status(500).json(err)
+    res.status(500).json({errorMessage: 'El mail introducido ya está en uso'})
   }
 })
 
