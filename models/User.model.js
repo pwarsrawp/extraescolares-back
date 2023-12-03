@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema(
   {
@@ -21,14 +21,26 @@ const userSchema = new Schema(
       required: true,
     },
     isAdmin: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
+    students: [
+      {
+        name: {
+          type: String,
+          required: true,
+        },
+        level: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
 
-const User = model("User", userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;

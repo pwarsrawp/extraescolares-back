@@ -41,7 +41,17 @@ const activitySchema = new Schema(
     slots: {
       type: Number,
       required: true,
-    }
+    },
+    list: [{
+      name: {
+        type: String,
+        required: true
+      },
+      responsible: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    }]
   }
 );
 
