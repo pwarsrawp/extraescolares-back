@@ -1,34 +1,33 @@
-const Student = require('../models/Student.model');
+const Student = require('../models/StudentModel');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-module.exports.getAllStudents = async (req, res) => {
+const getAllStudents = async (req, res) => {
   const allStudents = await Student.find();
   res.send(allStudents);
 };
 
-module.exports.getSomeStudents = async (req, res) => {
+const getStudentsByUserId = async (req, res) => {
   const userId = req.params.userId;
-  console.log(userId);
-  const someStudents = await Student.find({
+  const students = await Student.find({
     user: new ObjectId(`${userId}`),
   });
-  console.log(someStudents);
-  res.send(someStudents);
+  res.send(students);
 };
 
-module.exports.getOneStudent = async (req, res) => {
+const getOneStudent = async (req, res) => {
   const id = req.params.activityId;
   const oneStudent = await Student.findById(id);
   res.send(oneStudent);
 };
 
-module.exports.createStudent = async (req, res) => {
+const createStudent = async (req, res) => {
+  console.log(req.body);
   const newStudent = await Student.create(req.body);
   console.log('New Student created successfully', newStudent);
   res.send(newStudent);
 };
 
-module.exports.updateStudent = async (req, res) => {
+const updateStudent = async (req, res) => {
   const id = req.params.studentId;
   const updatedStudent = await Student.findByIdAndUpdate(id, req.body, {
     new: true,
@@ -37,8 +36,11 @@ module.exports.updateStudent = async (req, res) => {
   res.send(updatedStudent);
 };
 
-module.exports.deleteStudent = async (req, res) => {
-  const id = req.params.studentId;
-  await Student.findOneAndDelete(id);
+const deleteStudent = async (req, res) => {
+  const studentId = req.params.studentId;
+  console.log(studentId);
+  await Student.findOneAndDelete(studentId);
   res.status(202).json({ message: 'Student successfully deleted' });
 };
+
+module.exports = { getAllStudents, getStudentsByUserId, getOneStudent, createStudent, updateStudent, deleteStudent };

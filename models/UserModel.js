@@ -8,7 +8,11 @@ const userSchema = new Schema(
       trim: true,
       unique: true,
     },
-    fullname: {
+    name: {
+      type: String,
+      required: true,
+    },
+    surname: {
       type: String,
       required: true,
     },
@@ -35,6 +39,9 @@ const userSchema = new Schema(
         },
       },
     ],
+    refreshToken: {
+      type: String,
+    }
   },
   {
     timestamps: true,
