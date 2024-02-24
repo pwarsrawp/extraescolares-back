@@ -1,10 +1,11 @@
 const router = require('express').Router();
-const { getAllActivities, getOneActivity, createActivity, updateActivity, deleteActivity } = require('../controllers/activitiesController');
+const activitiesController = require('../controllers/activitiesController');
+const verifyJWT = require('../middlewares/verifyJWT');
 
-router.get('/', getAllActivities);
-router.get('/:activityId', getOneActivity);
-router.post('/create', createActivity);
-router.put('/:activityId', updateActivity);
-router.delete('/:activityId', deleteActivity);
+router.get('/', verifyJWT, activitiesController.getAllActivities);
+router.get('/:activityId', activitiesController.getOneActivity);
+router.post('/create', activitiesController.createActivity);
+router.put('/:activityId', activitiesController.updateActivity);
+router.delete('/:activityId', activitiesController.deleteActivity);
 
 module.exports = router;

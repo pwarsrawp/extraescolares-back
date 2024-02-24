@@ -1,12 +1,11 @@
 const router = require('express').Router();
-const { getAllStudents, getStudentsByUserId, getOneStudent, createStudent, updateStudent, deleteStudent } = require('../controllers/studentsController');
+const studentsController = require('../controllers/studentsController');
 
-router.get('/', getAllStudents);
-//router.get('/some', getSomeStudents);
-router.get('/user/:userId', getStudentsByUserId);
-router.get('/:studentId', getOneStudent);
-router.post('/create', createStudent);
-router.put('/:studentId', updateStudent);
-router.delete('/:studentId', deleteStudent);
+router.get('/', studentsController.getAllStudents);
+router.get('/user/:userId', studentsController.getStudentsByUserId);
+router.get('/:studentId', studentsController.getStudentById);
+router.post('/create', studentsController.createStudent);
+router.put('/:studentId', studentsController.updateStudent);
+router.delete('/:studentId', studentsController.deleteStudent);
 
 module.exports = router;

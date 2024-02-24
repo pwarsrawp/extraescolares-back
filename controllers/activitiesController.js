@@ -13,7 +13,7 @@ const getOneActivity = async (req, res) => {
 
 const createActivity = async (req, res) => {
   const newActivity = await Activity.create(req.body);
-  console.log('New Activity created successfully', newActivity);
+  console.log('Nueva actividad creada correctamente.', newActivity);
   res.send(newActivity);
 };
 
@@ -22,14 +22,14 @@ const updateActivity = async (req, res) => {
   const updatedActivity = await Activity.findByIdAndUpdate(id, req.body, {
     new: true,
   });
-  console.log('Activity updated successfully', updatedActivity);
+  console.log('Actividad actualizada correctamente.', updatedActivity);
   res.send(updatedActivity);
 };
 
 const deleteActivity = async (req, res) => {
   const id = req.params.activityId;
   await Activity.findOneAndDelete(id);
-  res.status(202).json({ message: 'Activity successfully deleted' });
+  res.status(202).json({ message: 'Actividad borrada correctamente.' });
 };
 
 module.exports = { getAllActivities, getOneActivity, createActivity, updateActivity, deleteActivity };

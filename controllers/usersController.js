@@ -15,7 +15,7 @@ const getUserById = async (req, res) => {
 const updateUser = async (req, res) => {
   const id = req.params.activityId;
   const updatedUser = await User.findByIdAndUpdate(id, req.body, { new: true });
-  console.log('User updated successfully', updatedUser);
+  console.log('Usuario actualizado correctamente.', updatedUser);
   res.send(updatedUser);
 };
 
@@ -32,7 +32,7 @@ const updateUserPwd = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log('An error occurred while verifying the password: ', error);
+    console.log('Ha ocurrido un error verificando la contraseña: ', error);
   }
   delete payload.oldPassword;
   delete payload.newPassword;
@@ -45,7 +45,7 @@ const updateUserPwd = async (req, res) => {
 const deleteUser = async (req, res) => {
   const id = req.params.userId;
   await User.findOneAndDelete(id);
-  res.status(202).json({ message: 'User successfully deleted' });
+  res.status(202).json({ message: 'Usuario borrado correctamente.' });
 };
 
 module.exports = { getAllUsers, getUserById, updateUser, updateUserPwd, deleteUser };
