@@ -1,5 +1,8 @@
 const Activity = require('../models/ActivityModel');
 
+////////////////////////////////////////
+////////// ACTIVITY MODIFIERS //////////
+////////////////////////////////////////
 const getAllActivities = async (req, res) => {
   const allActivities = await Activity.find();
   res.send(allActivities);
@@ -32,4 +35,110 @@ const deleteActivity = async (req, res) => {
   res.status(202).json({ message: 'Actividad borrada correctamente.' });
 };
 
-module.exports = { getAllActivities, getOneActivity, createActivity, updateActivity, deleteActivity };
+/////////////////////////////////////
+////////// LISTS MODIFIERS //////////
+/////////////////////////////////////
+const addStudentToCurrentList = async (req, res) => {
+  const { activityId } = req.params;
+  const { studentId } = req.body;
+  try {
+    const updatedList = await Activity.findByIdAndUpdate(activityId, { $addToSet: { currentList: { studentId } } }, { new: true });
+    if (!updatedList) {
+      res.sendStatus(400);
+    } else {
+      res.status(200).json(updatedList);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const addStudentToWaitingList = async (req, res) => {
+  const { activityId } = req.params;
+  const { studentId } = req.body;
+  try {
+    const updatedList = await Activity.findByIdAndUpdate(activityId, { $addToSet: { waitingList: { studentId } } }, { new: true });
+    if (!updatedList) {
+      res.sendStatus(400);
+    } else {
+      res.status(200).json(updatedList);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const removeStudentFromCurrentList = async (req, res) => {
+  const { activityId } = req.params;
+  const { studentId } = req.body;
+  try {
+    const updatedList = await Activity.findByIdAndUpdate(activityId, { $pull: { currentList: { studentId } } }, { new: true });
+    if (!updatedList) {
+      res.sendStatus(400);
+    } else {
+      res.status(200).json(updatedList);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const removeStudentFromWaitingList = async (req, res) => {
+  const { activityId } = req.params;
+  const { studentId } = req.body;
+  try {
+    const updatedList = await Activity.findByIdAndUpdate(activityId, { $pull: { waitingList: { studentId } } }, { new: true });
+    if (!updatedList) {
+      res.sendStatus(400);
+    } else {
+      res.status(200).json(updatedList);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const clearCurrentList = async (req, res) => {
+  const { activityId } = req.params;
+  try {
+    const updatedList = await Activity.findByIdAndUpdate(activityId, { currentList: [] }, { new: true });
+    if (!updatedList) {
+      res.sendStatus(400);
+    } else {
+      res.status(200).json(updatedList);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const clearWaitingList = async (req, res) => {
+  const { activityId } = req.params;
+  try {
+    const updatedList = await Activity.findByIdAndUpdate(activityId, { waitingList: [] }, { new: true });
+    if (!updatedList) {
+      res.sendStatus(400);
+    } else {
+      res.status(200).json(updatedList);
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+/////////////////////////////
+////////// EXPORTS //////////
+/////////////////////////////
+module.exports = {
+  getAllActivities,
+  getOneActivity,
+  createActivity,
+  updateActivity,
+  addStudentToCurrentList,
+  addStudentToWaitingList,
+  removeStudentFromCurrentList,
+  removeStudentFromWaitingList,
+  clearCurrentList,
+  clearWaitingList,
+  deleteActivity,
+};

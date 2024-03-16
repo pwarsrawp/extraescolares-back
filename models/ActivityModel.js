@@ -37,16 +37,12 @@ const activitySchema = new Schema({
     type: String,
     required: true,
   },
-  slots: {
+  totalSlots: {
     type: Number,
     required: true,
   },
-  waitingList: {
-    type: Array,
-  },
-  currentList: {
-    type: Array,
-  },
+  currentList: [{ studentId: { type: Schema.Types.ObjectId, ref: 'Student' }, createdAt: { type: Date, default: new Date() } }],
+  waitingList: [{ studentId: { type: Schema.Types.ObjectId, ref: 'Student' }, createdAt: { type: Date, default: new Date() } }],
 });
 
 const Activity = model('Activity', activitySchema);

@@ -7,15 +7,39 @@ const getAllUsers = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  const id = req.params.userId;
-  const oneUser = await User.findById(id);
+  const userId = req.params.userId;
+  const oneUser = await User.findById(userId);
   res.send(oneUser);
 };
 
 const updateUser = async (req, res) => {
-  const id = req.params.activityId;
-  const updatedUser = await User.findByIdAndUpdate(id, req.body, { new: true });
+  const userId = req.params.userId;
+  const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
   console.log('Usuario actualizado correctamente.', updatedUser);
+  res.send(updatedUser);
+};
+
+const createStudent = async (req, res) => {
+  const userId = req.params.userId;
+  const newStudent = req.body;
+  const updatedUser = await User.findByIdAndUpdate(userId, { $addToSet: { students: newStudent } }, { new: true });
+  console.log('Alumno creado correctamente.', updatedUser);
+  res.send(updatedUser);
+};
+
+const deleteStudent = async (req, res) => {
+  const userId = req.params.userId;
+  const studentId = req.body.studentId;
+  const updatedUser = await User.findByIdAndUpdate(userId, { $pull: { students: { _id: studentId } } }, { new: true });
+  console.log('Alumno eliminado correctamente.', updatedUser);
+  res.send(updatedUser);
+};
+
+const editStudent = async (req, res) => {
+  const userId = req.params.userId;
+  const body = req.body;
+  const updatedUser = await User.updateOne({ _id: userId, 'students._id': body._id }, { $set: { 'students.$.name': body.name, 'students.$.level': body.level } }, { new: true });
+  console.log('Alumno actualizado correctamente.', updatedUser);
   res.send(updatedUser);
 };
 
@@ -48,4 +72,4 @@ const deleteUser = async (req, res) => {
   res.status(202).json({ message: 'Usuario borrado correctamente.' });
 };
 
-module.exports = { getAllUsers, getUserById, updateUser, updateUserPwd, deleteUser };
+module.exports = { getAllUsers, getUserById, updateUser, createStudent, deleteStudent, editStudent, updateUserPwd, deleteUser };

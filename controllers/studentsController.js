@@ -15,13 +15,12 @@ const getStudentsByUserId = async (req, res) => {
 };
 
 const getStudentById = async (req, res) => {
-  const id = req.params.activityId;
+  const id = req.params.studentId;
   const oneStudent = await Student.findById(id);
   res.send(oneStudent);
 };
 
 const createStudent = async (req, res) => {
-  console.log(req.body);
   const newStudent = await Student.create(req.body);
   console.log('Nuevo alumno creado correctamente.', newStudent);
   res.send(newStudent);
@@ -38,7 +37,6 @@ const updateStudent = async (req, res) => {
 
 const deleteStudent = async (req, res) => {
   const studentId = req.params.studentId;
-  console.log(studentId);
   await Student.findOneAndDelete(studentId);
   res.status(202).json({ message: 'Alumno borrado correctamente.' });
 };
