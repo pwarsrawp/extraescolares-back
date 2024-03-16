@@ -37,7 +37,7 @@ const activitySchema = new Schema({
     type: String,
     required: true,
   },
-  totalSlots: {
+  slots: {
     type: Number,
     required: true,
   },

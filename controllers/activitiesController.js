@@ -21,17 +21,16 @@ const createActivity = async (req, res) => {
 };
 
 const updateActivity = async (req, res) => {
-  const id = req.params.activityId;
-  const updatedActivity = await Activity.findByIdAndUpdate(id, req.body, {
-    new: true,
-  });
+  const { activityId } = req.params;
+  const updatedActivity = await Activity.findByIdAndUpdate(activityId, req.body, { new: true });
   console.log('Actividad actualizada correctamente.', updatedActivity);
   res.send(updatedActivity);
 };
 
 const deleteActivity = async (req, res) => {
-  const id = req.params.activityId;
-  await Activity.findOneAndDelete(id);
+  const { activityId } = req.params;
+  console.log(req.params)
+  await Activity.findByIdAndRemove(activityId);
   res.status(202).json({ message: 'Actividad borrada correctamente.' });
 };
 
