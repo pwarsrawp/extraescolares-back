@@ -29,7 +29,6 @@ const updateActivity = async (req, res) => {
 
 const deleteActivity = async (req, res) => {
   const { activityId } = req.params;
-  console.log(req.params)
   await Activity.findByIdAndRemove(activityId);
   res.status(202).json({ message: 'Actividad borrada correctamente.' });
 };
